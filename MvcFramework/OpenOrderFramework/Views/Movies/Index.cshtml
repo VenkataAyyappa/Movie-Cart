@@ -1,0 +1,102 @@
+﻿@model OpenOrderFramework.Models.Movies
+@using OpenOrderFramework.Class;
+
+@section other{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="@Url.Content("~/Scripts/jsfront.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/fontawesome/font-awesome.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/fontawesome/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/main.css")" rel="stylesheet" type="text/css" />
+}
+@{ ViewBag.Title = "Movie Descriptions from TMDB";}
+<h1>Search your movie</h1>
+<div id="apiDiv" class="container ">
+    @using (Html.BeginForm())
+    {
+        @Html.TextBoxFor(model => model.searchText, new { @class = "form-control", @placeholder = "your movie" })
+        <input type="submit" value="Search" class="btn btn-default" />
+        @Html.ValidationMessageFor(model => model.searchText)
+    }
+    <div id="message">
+        @(new HtmlString(ViewBag.Result))
+    </div>
+    <div class="pagingDiv">
+        @{
+            Paging Paging = (Paging)ViewBag.Paging;
+            if (Paging != null)
+            {
+                @Html.PageLinks((Paging)ViewBag.Paging, x => Url.Action("Index", "Movies", new { peopleName = Model.searchText, page = x }))
+            }
+        }
+    </div>
+</div>
+<div id="fullpage">
+    <div class="section one">
+        <div class="movie-info">
+            <h1>Spider-Man HomeComing</h1>
+            <p><span class="rating">PG-13</span> 2hr 13min - Action/ Adventure/ Scifi</p>
+            <div class="stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div><!--stars end-->
+            <p>
+                A young Peter Parker (Tom Holland) begins to navigate his newfound identity as the web-slinging super hero
+            </p>
+            <button id="add-btn" data-id="315635" class="ove">OVERVIEW</button>
+
+        </div><!--movie-info end-->
+    </div>
+    <div class="section two">
+        <div class="movie-info">
+            <h1>Thor:Ragnarok</h1>
+            <p><span class="rating">PG-13</span> 2hr 10min - Action/ Adventure/ Scifi</p>
+            <div class="stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+            </div><!--stars end-->
+            <p>
+                Thor is imprisoned on the other side of the universe without his mighty hammer and finds himself in a race against time to get back to Asgard to stop Ragnarok.
+            </p>
+            <button id="add-btn" data-id="284053" class="ove">OVERVIEW</button>
+        </div><!--movie-info end-->
+    </div>
+    <div class="section three">
+        <div class="movie-info">
+            <h1>Mad Max: Fury Road</h1>
+            <p><span class="rating">PG-13</span> 2hr - Action/ Adventure/ Scifi</p>
+            <div class="stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div><!--stars end-->
+            <p>
+                A woman rebels against a tyrannical ruler in postapocalyptic Australia in search for her home-land with the help of a group of female prisoners, a psychotic worshipper, and a drifter named Max.
+            </p>
+            <button id="add-btn" data-id="76341" class="ove">OVERVIEW</button>
+        </div><!--movie-info end-->
+    </div>
+    <div class="section four active">
+        <div class="movie-info">
+            <h1>Deadpool</h1>
+            <p><span class="rating">R</span> 1hr 48min - Action/ Adventure/ Comedy</p>
+            <div class="stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div><!--stars end-->
+            <p>
+                A fast-talking mercenary with a morbid sense of humor is subjected to a rogue experiment that leaves him with accelerated healing powers and a quest for revenge.
+            </p>
+            <button id="add-btn" data-id="293660" class="ove">OVERVIEW</button>
+        </div><!--movie-info end-->
+    </div>
+</div>

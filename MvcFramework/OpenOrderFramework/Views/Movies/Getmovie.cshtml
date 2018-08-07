@@ -1,0 +1,117 @@
+﻿@model OpenOrderFramework.Models.Movies
+
+
+@section other{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="@Url.Content("~/Scripts/jsfront.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/fontawesome/font-awesome.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/fontawesome/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/main.css")" rel="stylesheet" type="text/css" />
+
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".AddLink").click(function () {
+            // Get the id from the link
+            var recordToAdd = $(this).attr("@Model.id");
+            if (recordToAdd != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/AddToCart", { "id": recordToAdd },
+                    function (data) {
+                        $('#cart-status').text(data.CartCount);
+                    });
+            }
+        });
+    });
+</script>
+
+
+
+<!-- Button trigger modal -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div aria-hidden="true" class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>An item was added to your cart.</strong> To check out now simply <a href="#" class="alert-link">click here</a>.
+    </div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Confirm check out.</h4>
+            </div>
+            <div class="modal-body">
+                <p style="color:black" >Would you like to check out or keep shopping??</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
+                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "ShoppingCart")'">Check Out</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+    body {
+        background-color: #000;
+    }
+
+
+    #apiDiv {
+        padding-left: 20px;
+        display: inline-block;
+        width: 95%;
+        text-align: justify;
+    }
+
+        #apiDiv h4 {
+            margin: 10px 0;
+        }
+
+        #apiDiv .biography img {
+            float: left;
+            padding-right: 10px;
+        }
+
+        #apiDiv .return {
+            text-align: center;
+        }
+
+            #apiDiv .return a, p {
+                color: white;
+                font-size: 20px;
+                text-decoration: none;
+            }
+</style>
+@{ ViewBag.Title = "Search your movie";}
+<div id="apiDiv">
+
+    <h4>@Model.name</h4>
+    <p class="biography"><img src="@Model.poster_path" />@Model.overview</p>
+    <p>Release date: @Model.release_date</p>
+    <p>Original name: @Model.original_title</p>
+    <p>Original language: @Model.original_language</p>
+    
+    <p> @Model.backdrop_path</p>
+    <p>Popularity Index: @Model.popularity</p>
+    
+
+    <div class="return"><a href="@Url.Action("Index", "Movies")">Return</a></div>
+
+    <a href="#" class="AddLink"
+       data-id="@Model.id" data-toggle="modal" data-target="#myModal">
+        Add
+        to cart
+    </a>
+    <!--@Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.id }, new { htmlAttributes = new { @data_toggle = "modal", @data_target = "#myModal" } })--> |
+</div>
